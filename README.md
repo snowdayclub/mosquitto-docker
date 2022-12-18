@@ -18,9 +18,9 @@ following settings:
 
 # Directories and Files
 
-* `/cleartext` : sample files for no encryption, no client authentication
-* `/tls_annn` : sample files for TLS encyrption, no client authentication
-* `/tls_auth` : sample files for TLS encryption, password authentication
+* `/cleartext` : no encryption, no client authentication
+* `/tls_annn` : TLS encyrption, no client authentication
+* `/tls_auth` : TLS encryption, password authentication
 
 Each directory contains
 
@@ -32,7 +32,7 @@ Each directory contains
 * `subscribe.py`: python client for a subscriber role
 * `mount/mosquitto.conf`: configuration file mounted to the container
 
-Following files also used when applicable
+Following files are used when applicable
 
 * `mount/certs`: server certificates located here
 * `mount/passwd`: password file
