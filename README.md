@@ -1,4 +1,4 @@
-# Mosquitto on Docker Examples
+# Mosquitto on Docker Container
 
 This repo provides sample configurations for eclipse-mosquitto on docker with
 following settings:
@@ -10,15 +10,17 @@ following settings:
 # Notes
 
 * It works with both `podman` and `docker` (need sudo).
-* `:Z` suffix in the path was added for rootless `podman`.
+* `:Z` suffix in the path was added for SELinux labeling.
 * It is not tested under Windows or MacOS.
-* Server certificate included here is created with `localhost` as  its
-`common name`, which should match with the url clients connect to.
+* Server certificate included in this example is created with `localhost`
+as its `common name`. This should match with the url that the clients
+connect to.  If you want to deploy the broker on machines other than
+`localhost`, you need to recreate the server certificate.
 
 
 # Directories and Files
 
-* `/cleartext` : no encryption, no client authentication
+* `/cleartext` : No encryption, no client authentication
 * `/tls_annn` : TLS encyrption, no client authentication
 * `/tls_auth` : TLS encryption, password authentication
 
@@ -34,9 +36,9 @@ Each directory contains
 
 Following files are used when applicable
 
-* `mount/certs`: server certificates located here
+* `mount/certs`: server certificates
 * `mount/passwd`: password file
-* `certs/`: client certificates located here
+* `certs/`: client certificates
 
 ## Certificate files required by server
 
@@ -80,7 +82,7 @@ pip3 install paho-mqtt
 
 # Testing
 
-* Run server (docker users may need sudo)
+* Run the server as a daemon (docker users may need sudo)
 ```
 ./server.sh
 ```
@@ -101,13 +103,16 @@ ps
 kill -9 <process no>
 ```
 
-* Shutdown server
+* Shutdown the server daemon
 ```
 docker container stop mosquitto
 ```
 
 
 # Certificates
+
+**DO NOT USE THE SAME INFORMATION** for creating certificates.
+Check [this for the reason.](https://mosquitto.org/man/mosquitto-tls-7.html)
 
 ## CA
 
