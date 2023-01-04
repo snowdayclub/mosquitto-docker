@@ -111,8 +111,12 @@ docker container stop mosquitto
 
 # Certificates
 
-**DO NOT USE THE SAME INFORMATION** for creating certificates.
-Check [this for the reason.](https://mosquitto.org/man/mosquitto-tls-7.html)
+* DO NOT use [THE SAME INFORMATION](https://mosquitto.org/man/mosquitto-tls-7.html) 
+for creating certificates.
+* DO NOT use passphrase when generating server.key and client.key if it is not 
+feasible to provide it when running the server or the client 
+(e.g. mosquitt on docker or client on embedded device)
+
 
 ## CA
 
