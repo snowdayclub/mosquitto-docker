@@ -125,7 +125,7 @@ feasible to provide it when running the server or the client
 openssl genrsa -des3 -out ca.key 2048
 ```
 
-* Create a signing request for the CA: Enter org name, but
+* Create a signing request for the CA: enter org name, but
 **do not enter common name** for CA.
 ```
 openssl req -new -key ca.key -out ca.csr -sha256
@@ -143,7 +143,7 @@ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt -days 365 -sha256
 openssl genrsa -out server.key 2048
 ```
 
-* Create a server certificate request: Do not omit the org name and
+* Create a server certificate request: do not omit the org name and
 the  **common name** (`localhost` or FQDN)
 ```
 openssl req -new -key server.key -out server.csr -sha256
@@ -161,7 +161,9 @@ openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out s
 openssl genrsa -out client.key 2048
 ```
 
-* Create a client certificate request
+* Create a client certificate request: in this case **common name** can be
+used as a username if `use_identity_as_username` is set true in
+`mostquitto.conf`. Otherwise you can leave it empty.
 ```
 openssl req -new -key client.key -out client.csr -sha256
 ```
@@ -173,7 +175,11 @@ openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out c
 
 # Password File
 
-* Create a password file with an inital user
+You can use username / password authentication in place of X509 certificate
+method. To do this, set `use_identity_as_username` as `false` and specify
+`password_file` in `mosquitto.conf`
+
+* Create a password file with an initial user
 ```
 mosquitto_passwd -c <passwd file> <username>
 ```
@@ -193,12 +199,15 @@ pub_user    pub_password
 
 # References
 
-* [mosquitto-tls man page](https://mosquitto.org/man/mosquitto-tls-7.html)
-* [mosquitto.conf man page](https://mosquitto.org/man/mosquitto-conf-5.html)
-* [mosquitto_passwd man page](https://mosquitto.org/man/mosquitto_passwd-1.html)
-* [man page: mosquitto_pub](https://mosquitto.org/man/mosquitto_pub-1.html)
-* [man page: mosquitto_sub](https://mosquitto.org/man/mosquitto_sub-1.html)
+* [mosquitto-tls manpage](https://mosquitto.org/man/mosquitto-tls-7.html)
+* [mosquitto.conf manpage](https://mosquitto.org/man/mosquitto-conf-5.html)
+* [mosquitto_passwd manpage](https://mosquitto.org/man/mosquitto_passwd-1.html)
+* [mosquitto_pub manpage](https://mosquitto.org/man/mosquitto_pub-1.html)
+* [mosquitto_sub manpage](https://mosquitto.org/man/mosquitto_sub-1.html)
 * [mosquitto.conf](https://github.com/eclipse/mosquitto/blob/master/mosquitto.conf)
+* [openssl manpage](https://www.openssl.org/docs/man1.0.2/man1/openssl.html)
+* [openssl req manpage](https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html)
+* [openssl x509 manpage](https://www.openssl.org/docs/man1.0.2/man1/x509.html)
 * [CONNACK return code](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/csd02/mqtt-v3.1.1-csd02.html#_Table_3.1_-)
 * [stackoverflow: Mqtt TLS certificate verify failed](https://stackoverflow.com/questions/70110392/mqtt-tls-certificate-verify-failed-self-signed-certificate)
 
